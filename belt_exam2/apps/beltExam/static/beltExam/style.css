@@ -1,0 +1,8 @@
+table {
+    border-collapse: collapse;
+  }
+  tr, thead, tr ,td{
+    border: solid 1px black;
+    padding:10px;
+    min-width: 40px;
+  }

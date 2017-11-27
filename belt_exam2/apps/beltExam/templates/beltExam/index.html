@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Trip Home</title>
+  {% load staticfiles %}
+  <link href="{% static 'beltExam/style.css' %}" rel="stylesheet">
+</head>
+<body>
+  <a href="{% url 'login:logout' %}"><button type="button">Logout</button></a>
+   <h1>Hello, {{ user.0.first_name }}</h1>
+   {% for message in messages %}
+     <p>{{ message }}</p>
+   {% endfor %}
+  <h3>Your Scheduled Trips:</h3>
+  <table>
+    <thead>
+      <tr>
+        <td>Destination</td>
+        <td>Travel Start Date</td>
+        <td>Travel End Date</td>
+        <td>Plan</td>
+      </tr>
+    </thead>
+    <tbody>
+    {%if mytrips%}
+      {% for trip in mytrips %}
+        <tr>
+          <td><a href="{% url 'travels:destination' id=trip.id %}">{{ trip.destination }}</a></td>
+          <td>{{ trip.startdate|date:'M d Y' }}</td>
+          <td>{{ trip.enddate|date:'M d Y' }}</td>
+          <td>{{ trip.description }}</td>
+        </tr>
+      {% endfor %}
+    {%endif%}
+    </tbody>
+  </table>
+  <h3>Others' Travel Plans: </h3>
+  <table>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Destination</td>
+        <td>Travel Start Date</td>
+        <td>Travel End Date</td>
+        <td>Do You Want to Join?</td>
+      </tr>
+    </thead>
+    <tbody>
+      {%if othertrips%}
+        {% for trip in othertrips %}
+          <tr>
+            <td>{{ trip.creator.first_name }}</td>
+            <td><a href="{% url 'travels:destination' id=trip.id %}">{{ trip.destination }}</a></td>
+            <td>{{ trip.startdate|date:'M d Y' }}</td>
+            <td>{{ trip.enddate|date:'M d Y' }}</td>
+            <td><a href="{% url 'travels:join' id=trip.id %}">Join</a></td>
+          </tr>
+        {% endfor %}
+      {%endif%}
+     </tbody>
+   </table>
+   <h2><a href="{% url 'travels:addScreen' %}"><button type="button">Add Plans</button></a></h2>
+</body>
+</html>
